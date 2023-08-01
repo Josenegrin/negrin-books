@@ -1,0 +1,34 @@
+---
+import Title from "../components/Title.astro";
+import Layout from "../layouts/Layout.astro";
+import booksData from "../data";
+
+const { book } = Astro.params
+
+const info = booksData.find(b => b.id === book)
+
+if (!info) return Astro.redirect("/404")
+
+const { title, image, description, author, id } = info
+---
+
+<Layout title=`Libro ${title}`>
+  <Title prefix="Libros de" sufix="crecimiento personal"/>
+  <div class="grid grid-cols-2 gap-10">
+    <div class="flex flex-col">
+      <picture class="mb-8 w-full relative">
+        <img
+          class="aspect-[331/500] h-full object-cover w-full max-w-full rounded"
+          src={image}
+          alt={`Portada del libro ${title}`}
+          style={`view-transition-name: book-${id}`}
+        />
+      </picture>
+    </div>
+    <aside>
+      <h1 class="text-3xl font-black  mb-4 text-justify">{title}</h1>
+      <p class="mb-2"><strong class="text-gray-600">Author:</strong> {author}</p>
+      <p class="mb-2"><strong class="text-gray-600">Description:</strong> {description}</p>
+    </aside>
+  </div>
+</Layout>

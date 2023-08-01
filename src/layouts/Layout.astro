@@ -14,10 +14,13 @@ const { title } = Astro.props;
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
+		<meta name="view-transition" content="same-origin" />
 		<title>{title}</title>
 	</head>
 	<body>
-		<slot />
+		<main class="m-auto max-w-4xl" id="content">
+			<slot />
+		</main>
 	</body>
 </html>
 <style is:global>
@@ -33,4 +36,13 @@ const { title } = Astro.props;
 		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
 			Bitstream Vera Sans Mono, Courier New, monospace;
 	}
+	::view-transition-old(root),
+	::view-transition-new(root) {
+		animation-duration: 0.5s;
+	}
 </style>
+
+<script>
+	import viewTransitionAnimation from "../utils/viewTransition";
+	viewTransitionAnimation()
+</script>
